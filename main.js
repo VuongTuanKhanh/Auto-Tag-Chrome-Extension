@@ -10,11 +10,11 @@ while(true) {
     let all_Conversation = _access_All_Conversations('conversation-list-item');
 
     // Xử lý cho từng cuộc hội thoại
-    for(i in all_Conversation) {
+    for(i of all_Conversation) {
         // In đối tượng ra màn hình Console
-        console.log(all_Conversation[i]);
+        console.log(i);
         // Click vào đối tượng
-        all_Conversation[i].click();
+        i.click();
     }
 
     // Dừng vòng lặp
