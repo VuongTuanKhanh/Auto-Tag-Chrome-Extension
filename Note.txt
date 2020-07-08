@@ -6,4 +6,6 @@ for (let i = 0; i < collection.length; ++i) {
 }
 
 delete collection;
+
 collection[0].childNodes[1].childNodes[2].childNodes[0].childNodes[0].childNodes[0].textContent
+document.getElementsByClassName('conversation-list-item')[0].lastChild.lastChild.firstChild.firstChild.textContent
