@@ -149,34 +149,93 @@ async function main() {
     Xac_Nhan_The();
     await sleep(limit);
 
+    // Biến cờ
+    let flat = true;
+
     // Thiết lập Interval
     let app = setInterval(async function () {
         console.log('Vòng lặp');
 
-        Loc_Tin_Nhan_Chua_Doc();
         await sleep(limit);
+        Loc_Tin_Nhan_Chua_Doc();
 
         // Biến lưu trữ giá trị tất cả các cuộc hội thoại đã được load
+        await sleep(limit);
         let all_Conversation = _access_All_Conversations('conversation-list-item');
         console.log('- Đã lấy danh sách hội thoại');
 
         // Nếu danh sách tin nhắn không rỗng, tiến hành xử lý
-        if((await all_Conversation).length > 0) {
+        if ((await all_Conversation).length > 0) {
 
             // Duyệt từng cuộc hội thoại
             for (let i of all_Conversation) {
                 // Truy cập vào đoạn hội thoại
+                await sleep(limit);
                 i.click();
                 console.log('- Click vào đoạn hội thoại thứ', i);
+
+                await sleep(limit);
+                // Kiểm tra số lượng tab, nếu khách mới thì sẽ là 2 ( Brand + Untagged )
+                if (i.lastChild.lastChild.firstChild.firstChild.children.length == 2) {
+
+                    if (flat) {
+                        flat = false;
+                        continue;
+                    }
+
+                    console.log('- Vòng lặp kiểm tra Length', i.lastChild.lastChild.firstChild.firstChild.children.length);
+
+                    for (let brand of brands) {
+                        await sleep(limit);
+                        console.log('- Brand hiện tại:', brand.name);
+
+                        for (let tag of i.lastChild.lastChild.firstElementChild.firstChild.children) {
+                            await sleep(limit);
+                            console.log('- Tag hiện tại:', tag.textContent);
+
+                            if (tag.textContent == brand.name) {
+
+                                console.log(tag.textContent, '==', brand.name)
+
+                                // Click vào TV hiện tại của brand
+                                await sleep(limit);
+                                TV[brand.current_TV].click();
+
+                                console.log('- Chọn', TV[brand.current_TV].textContent);
+                                console.log('- Click:', brand.name, 'Length:', i.lastChild.lastChild.firstChild.firstChild.children.length, 'Current:', brand.current_TV)
+
+                                flat = false;
+
+                                // Bỏ chọn Untagged
+                                await sleep(limit);
+                                Untagged.click();
+                                console.log('- Bỏ chọn Untagged');
+
+                                // Ấn chưa đọc
+                                await sleep(limit);
+                                document.querySelectorAll('.chat-menu-bar>li')[4].click()
+                                console.log('- Ấn chưa đọc')
+
+                                // Tăng TV của brand lên 1
+                                brand.current_TV += 1;
+
+                                // Kiểm tra TV có vượt quá số lượng quy định
+                                if (brand.current_TV == brand.max) {
+                                    brand.current_TV = 0;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
-        }
-        else {
+        } else {
             console.log('- Chưa có cuộc hội thoại nào');
         }
-        
+
         // Tạm dừng app
         clearInterval(app);
-        
+
     }, 3000);
 }
 
