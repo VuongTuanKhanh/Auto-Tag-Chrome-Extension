@@ -136,6 +136,10 @@ async function main() {
     await sleep(limit);
     Loc_Tin_Nhan_Chua_Doc();
     await sleep(limit);
+    let app = setInterval(function(){
+        console.log("Chào mừng bạn đến với freetuts.net");
+    }, 3000);
+    clearInterval(app);
 }
 
 main();
