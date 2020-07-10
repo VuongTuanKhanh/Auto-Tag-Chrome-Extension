@@ -110,9 +110,8 @@ async function Loc_Tin_Nhan_Chua_Doc() {
     console.log('- Đã lọc tin nhắn chưa đọc');
 }
 
-// Truy cập tát cả cuộc hội thoại
-async function _access_All_Conversations(class_Name) {
-    // await sleep(limit);
+// Truy cập tất cả cuộc hội thoại
+function _access_All_Conversations(class_Name) {
     let all_Conversation = document.getElementsByClassName(class_Name);
     return all_Conversation;
 }
@@ -163,7 +162,13 @@ async function main() {
 
         // Nếu danh sách tin nhắn không rỗng, tiến hành xử lý
         if((await all_Conversation).length > 0) {
-            
+
+            // Duyệt từng cuộc hội thoại
+            for (let i of all_Conversation) {
+                // Truy cập vào đoạn hội thoại
+                i.click();
+                console.log('- Click vào đoạn hội thoại thứ', i);
+            }
         }
         else {
             console.log('- Chưa có cuộc hội thoại nào');
