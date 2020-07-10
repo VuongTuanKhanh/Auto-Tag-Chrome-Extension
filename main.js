@@ -118,28 +118,61 @@ async function _access_All_Conversations(class_Name) {
 }
 
 async function main() {
+    // Click vào Button tin nhắn
     Click_Button_Tin_Nhan();
     await sleep(limit);
+
+    // Chọn hội thoại đầu tiên để lấy danh sách Button
     Chon_Hoi_Thoai_Dau_Tien();
     await sleep(limit);
+
+    // Lấy ra danh sách các Button
     Lay_Cac_Button();
     await sleep(limit);
+
+    // Thêm các TV có trong danh sách các Button và tạo biến Untagged
     Them_TV_Vao_Danh_Sach();
     await sleep(limit);
+
+    // Lọc thẻ
     Loc_The();
     await sleep(limit);
+
+    // Lọc thẻ hội thoại
     Loc_The_Hoi_Thoai();
     await sleep(limit);
+
+    // Chọn lọc thẻ Untagged
     Loc_The_Untagged();
     await sleep(limit);
+
+    // Click OK
     Xac_Nhan_The();
     await sleep(limit);
-    Loc_Tin_Nhan_Chua_Doc();
-    await sleep(limit);
-    let app = setInterval(function(){
-        console.log("Chào mừng bạn đến với freetuts.net");
+
+    // Thiết lập Interval
+    let app = setInterval(async function () {
+        console.log('Vòng lặp');
+
+        Loc_Tin_Nhan_Chua_Doc();
+        await sleep(limit);
+
+        // Biến lưu trữ giá trị tất cả các cuộc hội thoại đã được load
+        let all_Conversation = _access_All_Conversations('conversation-list-item');
+        console.log('- Đã lấy danh sách hội thoại');
+
+        // Nếu danh sách tin nhắn không rỗng, tiến hành xử lý
+        if((await all_Conversation).length > 0) {
+            
+        }
+        else {
+            console.log('- Chưa có cuộc hội thoại nào');
+        }
+        
+        // Tạm dừng app
+        clearInterval(app);
+        
     }, 3000);
-    clearInterval(app);
 }
 
 main();

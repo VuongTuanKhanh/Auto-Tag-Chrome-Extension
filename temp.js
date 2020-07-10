@@ -6,14 +6,6 @@ let temp = 0;
 
 // Xử lý vòng lặp
 while (temp < 5) {
-    console.log('Vòng lặp');
-    // Bật lọc tin nhắn chưa đọc
-    document.querySelector('ul.sidebar-nav').childNodes[1].click();
-
-    // Biến lưu trữ giá trị tất cả các cuộc hội thoại đã được load
-    all_Conversation = _access_All_Conversations('conversation-list-item');
-    console.log('- Đã lấy danh sách hội thoại');
-
     // Xử lý cho từng cuộc hội thoại
     for (let i of all_Conversation) {
         // Truy cập vào đoạn hội thoại
